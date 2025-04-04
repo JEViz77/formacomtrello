@@ -9,4 +9,8 @@ public class AdminController {
     public String dashboard() {
         return "dashboard";
     }
+    @GetMapping("/createproject")
+    public String createProject() {
+        return "createproject";
+    }
 }
