@@ -22,7 +22,7 @@ public class UsuariosController {
 
     // Página principal
     @GetMapping("/")
-    public String index() {
+    public String home() {
         return "home";  // Aquí redirigimos a la vista 'index.html'
     }
 
@@ -42,14 +42,10 @@ public class UsuariosController {
     @PostMapping("/register")
     public String register(Usuarios user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRol("ROLE_ADMIN"); // O 'USER' según corresponda
+        user.setRol("ROLE_USER"); // O 'USER' según corresponda
         usuariosRepository.save(user);
         return "redirect:/login";  // Después de registrarse, redirigimos al login
     }
-    // Página de Dashboard (Panel del Gestor)
-    @GetMapping("/dashboard_gestor")
-    public String dashboardGestor() {
-        return "dashboard_gestor";  // Redirige a la vista dashboard_gestor.html
-    }
+
 }
 
