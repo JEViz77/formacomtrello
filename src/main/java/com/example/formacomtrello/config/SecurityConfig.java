@@ -31,16 +31,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/css/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/", "/login", "/register", "/css/**").permitAll() // Permite acceso sin autenticación
+                        .requestMatchers("/dashboard_gestor").hasRole("ADMIN")  // Solo los usuarios con el rol GESTOR pueden acceder a esta página
+                        .anyRequest().authenticated()  // Cualquier otra página requiere autenticación
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/dashboard_gestor", true)  // Después del login, redirige a la página principal
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/login?logout")  // Después del logout, redirige al login
                         .permitAll()
                 );
 

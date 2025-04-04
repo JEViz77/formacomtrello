@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UsuariosController {
+
     private PasswordEncoder encoder;
     private UsuariosRepository usuariosRepository;
 
@@ -19,22 +20,36 @@ public class UsuariosController {
         this.usuariosRepository = usuariosRepository;
     }
 
+    // Página principal
+    @GetMapping("/")
+    public String index() {
+        return "home";  // Aquí redirigimos a la vista 'index.html'
+    }
+
+    // Página de login
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    // Página de registro
     @GetMapping("/register")
     public String register() {
         return "register";
     }
 
+    // Endpoint para el registro de usuarios
     @PostMapping("/register")
     public String register(Usuarios user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        // Cambia 'ROL_USER' por uno de los valores válidos
-        user.setRol("ADMIN"); // O 'ADMIN' según corresponda
+        user.setRol("ROLE_ADMIN"); // O 'USER' según corresponda
         usuariosRepository.save(user);
-        return "redirect:/login";
+        return "redirect:/login";  // Después de registrarse, redirigimos al login
+    }
+    // Página de Dashboard (Panel del Gestor)
+    @GetMapping("/dashboard_gestor")
+    public String dashboardGestor() {
+        return "dashboard_gestor";  // Redirige a la vista dashboard_gestor.html
     }
 }
+
