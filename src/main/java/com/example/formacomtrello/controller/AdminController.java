@@ -13,4 +13,8 @@ public class AdminController {
     public String createProject() {
         return "createproject";
     }
+    @GetMapping("/createcolaborator")
+    public String createColaborator() {
+        return "createcolaborator";
+    }
 }
