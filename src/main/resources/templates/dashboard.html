@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel del Gestor</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 <body>
-<h1>Administrador</h1>
-<p>Aquí puedes realizar todas las tareas que te corresponden como gestor.</p>
-<ul>
-    <li><a href="createproject" >Crear proyecto</a></li>
-    <li><a href="/createcolaborator">Crear Colaborador</a></li>
-</ul>
-<p><a href="/login?logout">Cerrar sesión</a></p>
+<div class="container">
+    <h1>Administrador</h1>
+    <p>Aquí puedes realizar todas las tareas que te corresponden como gestor.</p>
+    <ul>
+        <li><a href="createproject" >Crear proyecto</a></li>
+
+        <li><a href="/createcolaborator">Crear Colaborador</a></li>
+    </ul>
+    <p><a href="/login?logout">Cerrar sesión</a></p>
+</div>
+
 </body>
 </html>

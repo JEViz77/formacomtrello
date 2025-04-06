@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Colaborador</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 <body>
+<div class="container">
 <h1>Crear Colaborador</h1>
 <p>Rellena los campos para crear un nuevo colaborador:</p>
 <form th:action="@{/createcolaborator}" method="POST">
@@ -27,5 +29,6 @@
 </form>
 <br>
 <a href="/dashboard">Volver al Panel del Gestor</a>
+</div>
 </body>
 </html>
