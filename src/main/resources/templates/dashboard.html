@@ -11,12 +11,13 @@
     <h1>Administrador</h1>
     <p>Aquí puedes realizar todas las tareas que te corresponden como gestor.</p>
     <ul>
-        <li><a href="createproject" >Crear proyecto</a></li>
-
+        <li><a th:href="@{/createproject}">Crear proyecto</a></li>
         <li><a th:href="@{/createcolaborator}">Crear Colaborador</a></li>
+        <li><a th:href="@{/viewprojects}">Ver Proyectos</a></li>
     </ul>
-    <p><a href="/login?logout">Cerrar sesión</a></p>
-</div>
 
+
+</div>
+<p><a href="/login?logout">Cerrar sesión</a></p>
 </body>
 </html>

@@ -5,6 +5,8 @@ import com.example.formacomtrello.repository.ProyectosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProyectosService {
 
@@ -13,5 +15,9 @@ public class ProyectosService {
 
     public void saveProyecto(Proyectos proyecto) {
         proyectosRepository.save(proyecto); // Guardar el proyecto en la base de datos
+    }
+
+    public List<Proyectos> findAll() {
+        return proyectosRepository.findAll(); // Obtener todos los proyectos
     }
 }

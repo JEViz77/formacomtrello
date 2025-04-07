@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ver Proyectos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/viewprojects.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Lista de proyectos</h1>
+    <table class="projects-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Vencimiento</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.id}"></td>
+            <td th:text="${project.titulo}"></td>
+            <td th:text="${project.descripcion}"></td>
+            <td th:text="${project.fecha_inicio}"></td>
+            <td th:text="${project.fecha_vencimiento}"></td>
+            <td>
+                <a th:href="@{/addtask(project.id)}">Añadir Tarea</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

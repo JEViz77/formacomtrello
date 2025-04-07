@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 @Controller
 public class AdminController {
 
@@ -34,6 +36,38 @@ public class AdminController {
     @GetMapping("/createcolaborator")
     public String createColaborator(Model model) {
         return "createcolaborator";
+    }
+    @GetMapping("/viewprojects")
+    public String viewProjects(Model model) {
+        List<Proyectos> proyectos = proyectosService.findAll(); // o tu método que los obtiene
+        model.addAttribute("projects", proyectos);
+        return "viewprojects"; // este nombre debe coincidir con el HTML: viewprojects.html
+    }
+    @GetMapping("/addtask")
+    public String addTask(Model model) {
+        return "addtask"; // este nombre debe coincidir con el HTML: addtask.html
+    }
+
+    @PostMapping("/createcolaborator")
+    public String createColaborator(@ModelAttribute Usuarios colaborador,
+                                    @AuthenticationPrincipal UserDetails userDetails) {
+        // Obtener el email del gestor autenticado
+        String email = userDetails.getUsername();
+
+        // Buscar al gestor (aunque no lo uses, lo puedes dejar por si quieres registrar el id del creador)
+        Usuarios gestor = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Asignar el rol de "USER" al nuevo colaborador
+        colaborador.setRol("ROLE_USER");
+
+        // Aquí podrías relacionarlo con el gestor si es necesario
+        // colaborador.setGestorId(gestor.getId()); <-- si tienes ese campo
+
+        // Guardar el colaborador en la base de datos
+        usuariosRepository.save(colaborador);
+
+        return "redirect:/dashboard";
     }
 
     @PostMapping("/createproject")
