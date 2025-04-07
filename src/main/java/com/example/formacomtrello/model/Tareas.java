@@ -1,20 +1,26 @@
 package com.example.formacomtrello.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.IdGeneratorType;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "tareas")
 public class Tareas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String titulo;
     private String descripcion;
-    private String fecha_vencimientoin;
+    private LocalDate fecha_vencimiento;
     private String estado;
-    private Integer proyecto_id;
-    private Integer colaborador_id;
+
+
+    @ManyToOne
+    @JoinColumn(name = "proyecto_id")
+    private Proyectos proyecto;
+
+    @ManyToOne
+    @JoinColumn(name = "colaborador_id")
+    private Usuarios colaborador;  // Relación con Usuarios, que tiene el rol de colaborador
 
     public Tareas() {
     }
@@ -43,12 +49,12 @@ public class Tareas {
         this.descripcion = descripcion;
     }
 
-    public String getFecha_vencimientoin() {
-        return fecha_vencimientoin;
+    public LocalDate getFecha_vencimiento() {
+        return fecha_vencimiento;
     }
 
-    public void setFecha_vencimientoin(String fecha_vencimientoin) {
-        this.fecha_vencimientoin = fecha_vencimientoin;
+    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
+        this.fecha_vencimiento = fecha_vencimiento;
     }
 
     public String getEstado() {
@@ -59,19 +65,19 @@ public class Tareas {
         this.estado = estado;
     }
 
-    public Integer getProyecto_id() {
-        return proyecto_id;
+    public Proyectos getProyecto() {
+        return proyecto;
     }
 
-    public void setProyecto_id(Integer proyecto_id) {
-        this.proyecto_id = proyecto_id;
+    public void setProyecto(Proyectos proyecto) {
+        this.proyecto = proyecto;
     }
 
-    public Integer getColaborador_id() {
-        return colaborador_id;
+    public Usuarios getColaborador() {
+        return colaborador;
     }
 
-    public void setColaborador_id(Integer colaborador_id) {
-        this.colaborador_id = colaborador_id;
+    public void setColaborador(Usuarios colaborador) {
+        this.colaborador = colaborador;
     }
 }

@@ -29,6 +29,7 @@
             <td th:text="${project.fecha_vencimiento}"></td>
             <td>
                 <a th:href="@{/addtask(project.id)}">Añadir Tarea</a>
+                <a th:href="@{/viewtasks(project.id)}">Ver Tareas</a>
             </td>
         </tr>
         </tbody>

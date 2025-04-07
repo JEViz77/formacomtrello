@@ -1,7 +1,9 @@
 package com.example.formacomtrello.service;
 
 import com.example.formacomtrello.model.Proyectos;
+import com.example.formacomtrello.model.Tareas;
 import com.example.formacomtrello.repository.ProyectosRepository;
+import com.example.formacomtrello.repository.TareasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +12,14 @@ import java.util.List;
 @Service
 public class ProyectosService {
 
+
+    private final ProyectosRepository proyectosRepository;
+    private final TareasRepository tareasRepository;
     @Autowired
-    private ProyectosRepository proyectosRepository;
+    public ProyectosService(ProyectosRepository proyectosRepository, TareasRepository tareasRepository) {
+        this.proyectosRepository = proyectosRepository;
+        this.tareasRepository = tareasRepository;
+    }
 
     public void saveProyecto(Proyectos proyecto) {
         proyectosRepository.save(proyecto); // Guardar el proyecto en la base de datos
@@ -19,5 +27,17 @@ public class ProyectosService {
 
     public List<Proyectos> findAll() {
         return proyectosRepository.findAll(); // Obtener todos los proyectos
+    }
+
+    public void saveTarea(Tareas tarea) {
+
+        tareasRepository.save(tarea); // Guardar la tarea en la base de datos
+    }
+
+    public Object obtenerTodos() {
+        return null;
+    }
+    public List<Tareas> obtenerTareas() {
+        return tareasRepository.findAll();
     }
 }

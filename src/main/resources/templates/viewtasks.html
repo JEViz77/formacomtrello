@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>lista de tareas</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha de Vencimiento</th>
+        <th>Estado</th>
+        <th>Proyecto</th>
+        <th>Colaborador</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.titulo}"></td>
+        <td th:text="${task.descripcion}"></td>
+        <td th:text="${task.fecha_vencimiento}"></td>
+        <td th:text="${task.estado}"></td>
+        <td th:text="${task.proyecto.titulo}"></td>
+        <td th:text="${task.colaborador.nombre}"></td>
+        <td>
+            <!-- Aquí puedes añadir enlaces para editar o eliminar la tarea -->
+            <a th:href="@{/edittask(task.id)}">Editar</a>
+            <a th:href="@{/deletetask(task.id)}">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

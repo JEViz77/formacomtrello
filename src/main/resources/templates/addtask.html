@@ -6,5 +6,33 @@
 </head>
 <body>
 <h1>Añadir tarea</h1>
+<p>Rellena los campos para añadir una nueva tarea:</p>
+<form th:action="@{/addtask}" method="POST">
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" name="titulo" required><br><br>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" name="descripcion" rows="4" required></textarea><br><br>
+
+    <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+    <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" required><br><br>
+
+    <label for="estado">Estado:</label>
+    <select id="estado" name="estado" required>
+        <option value="pendiente">Pendiente</option>
+        <option value="en_progreso">En Progreso</option>
+        <option value="completada">Completada</option>
+    </select><br><br>
+
+    <label for="proyecto_id">Proyecto:</label>
+    <select id="proyecto_id" name="proyecto_id" required>
+        <option th:each="proyecto : ${proyectos}" th:value="${proyecto.id}" th:text="${proyecto.titulo}"></option>
+    </select><br><br>
+    <label for="colaborador_id">Colaborador:</label>
+    <select id="colaborador_id" name="colaborador_id" required>
+        <option th:each="colaborador : ${colaboradores}" th:value="${colaborador.id}" th:text="${colaborador.nombre}"></option>
+    </select><br><br>
+
+    <button type="submit">Añadir Tarea</button>
 </body>
 </html>
