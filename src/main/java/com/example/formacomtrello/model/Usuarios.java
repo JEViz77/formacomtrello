@@ -2,6 +2,8 @@ package com.example.formacomtrello.model;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuarios {
@@ -83,6 +85,7 @@ public class Usuarios {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
 
 
 }
