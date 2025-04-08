@@ -48,10 +48,12 @@ CREATE TABLE `proyectos` (
   `titulo` varchar(255) NOT NULL,
   `descripcion` text DEFAULT NULL,
   `gestor_id` int(11) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `gestor_id` (`gestor_id`),
   CONSTRAINT `proyectos_ibfk_1` FOREIGN KEY (`gestor_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +76,7 @@ CREATE TABLE `tareas` (
   KEY `colaborador_id` (`colaborador_id`),
   CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`proyecto_id`) REFERENCES `proyectos` (`id`),
   CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`colaborador_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +97,7 @@ CREATE TABLE `usuarios` (
   `rol` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -107,4 +109,4 @@ CREATE TABLE `usuarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-04  4:30:27
+-- Dump completed on 2025-04-09  1:26:33

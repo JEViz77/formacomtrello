@@ -46,5 +46,16 @@ public class ColaboratorController {
         }
         return "redirect:/colaborator";
     }
+    @PostMapping("/colaborator/tarea/procesar")
+    public String cambiarEstadoEnProceso(@RequestParam("tareaId") Integer tareaId) {
+        Tareas tarea = tareaRepository.findById(tareaId).orElse(null);
+        if (tarea != null) {
+            tarea.setEstado("En Proceso");  // Cambiar el estado a "En Proceso"
+            tareaRepository.save(tarea);
+        }
+        return "redirect:/colaborator";
+    }
+
+
 
 }
