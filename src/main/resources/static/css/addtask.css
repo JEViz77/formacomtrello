@@ -3,15 +3,14 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.container {
+    max-width: 800px;
+}
+
 h1 {
     color: #343a40;
 }
 
-.table {
-    font-size: 0.95rem;
-}
-
-.btn i {
+button i {
     margin-right: 5px;
-
 }

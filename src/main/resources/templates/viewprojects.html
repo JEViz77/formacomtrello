@@ -1,40 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ver Proyectos</title>
+    <title>Lista de Proyectos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/viewprojects.css}">
 </head>
 <body>
-<div class="container">
-    <h1>Lista de proyectos</h1>
-    <table class="projects-table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Fecha de Inicio</th>
-            <th>Fecha de Vencimiento</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="project : ${projects}">
-            <td th:text="${project.id}"></td>
-            <td th:text="${project.titulo}"></td>
-            <td th:text="${project.descripcion}"></td>
-            <td th:text="${project.fecha_inicio}"></td>
-            <td th:text="${project.fecha_vencimiento}"></td>
-            <td>
-                <a th:href="@{/addtask(project.id)}">Añadir Tarea</a>
-                <a th:href="@{/viewtasks/{proyectoId}(proyectoId=${project.id})}">Ver tareas</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<div class="container mt-5">
+    <nav class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Lista de proyectos</h1>
+        <a href="/dashboard" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Volver</a>
+    </nav>
 
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle text-center">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Vencimiento</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.id}"></td>
+                <td th:text="${project.titulo}"></td>
+                <td th:text="${project.descripcion}"></td>
+                <td th:text="${project.fecha_inicio}"></td>
+                <td th:text="${project.fecha_vencimiento}"></td>
+                <td>
+                    <a class="btn btn-primary btn-sm mb-1" th:href="@{/addtask(project.id)}">
+                        <i class="fas fa-plus"></i> Añadir Tarea
+                    </a>
+                    <a class="btn btn-info btn-sm" th:href="@{/viewtasks/{proyectoId}(proyectoId=${project.id})}">
+                        <i class="fas fa-tasks"></i> Ver Tareas
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

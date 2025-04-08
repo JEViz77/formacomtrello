@@ -8,6 +8,7 @@ import com.example.formacomtrello.service.ProyectosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,11 +24,16 @@ public class AdminController {
 
     private final ProyectosService proyectosService;
     private final UsuariosRepository usuariosRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public AdminController(ProyectosService proyectosService, UsuariosRepository usuariosRepository) {
+    public AdminController(ProyectosService proyectosService,
+                           UsuariosRepository usuariosRepository,
+                           PasswordEncoder passwordEncoder) {
         this.proyectosService = proyectosService;
         this.usuariosRepository = usuariosRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/createproject")
@@ -61,22 +67,18 @@ public class AdminController {
     @PostMapping("/createcolaborator")
     public String createColaborator(@ModelAttribute Usuarios colaborador,
                                     @AuthenticationPrincipal UserDetails userDetails) {
-        // Obtener el email del gestor autenticado
         String email = userDetails.getUsername();
-
-        // Buscar al gestor (aunque no lo uses, lo puedes dejar por si quieres registrar el id del creador)
         Usuarios gestor = usuariosRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Asignar el rol de "USER" al nuevo colaborador
         colaborador.setRol("ROLE_USER");
-
-        // Aquí podrías relacionarlo con el gestor si es necesario
         colaborador.setGestorId(gestor.getId());
 
-        // Guardar el colaborador en la base de datos
-        usuariosRepository.save(colaborador);
+        // 🛡️ Codificar la contraseña aquí
+        String contraseñaCodificada = passwordEncoder.encode(colaborador.getPassword());
+        colaborador.setPassword(contraseñaCodificada);
 
+        usuariosRepository.save(colaborador);
         return "redirect:/dashboard";
     }
     @GetMapping("/viewprojects")

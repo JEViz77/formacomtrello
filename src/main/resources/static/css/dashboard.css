@@ -1,178 +1,80 @@
-/* Estilos Generales */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+/* Reset básico */
+body, h1, h2, h3, p, ul, li, a, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.container {
-    max-width: 100%;
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
-}
-
-h1 {
-    color: #1abc9c;
-    font-size: 2.5em;
-    margin: 20px 0;
-    text-align: center;
-}
-
-p {
-    font-size: 1.1em;
-    margin: 15px 0;
-    text-align: center;
-}
-
-a {
-    color: #1abc9c;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-    margin: 20px 0; /* Separación entre el párrafo y la lista */
-}
-
-li {
-    margin: 15px 0; /* Espaciado entre los elementos de la lista */
-}
-
-li a {
-    color: #fff;
-    background-color: #1abc9c;
-    padding: 12px 25px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.2em;
-    display: inline-block; /* Asegura que el enlace tenga espacio alrededor */
-}
-
-li a:hover {
-    background-color: #16a085;
-}
-
-button {
-    background-color: #1abc9c;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1em;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #16a085;
-}
-
-/* Formularios */
-form {
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
-}
-
-form label {
-    display: block;
-    font-weight: bold;
-    margin: 10px 0 5px;
+/* Fuente base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
     color: #333;
+    padding: 20px;
 }
 
-form input,
-form select,
-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: #f7f7f7;
-    box-sizing: border-box; /* Asegura que los inputs no se desborden */
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form input[type="submit"] {
-    width: auto;
-    margin-top: 10px;
+/* Título */
+nav h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
 }
 
-form input:focus,
-form select:focus,
-form textarea:focus {
-    background-color: #f1f1f1;
-    outline: none;
-    border-color: #1abc9c;
+/* Navegación y logout */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-textarea {
-    resize: vertical;
+nav form button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    body {
-        font-size: 14px;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
-
-    form {
-        padding: 15px;
-        width: 100%; /* Asegura que el formulario ocupe todo el ancho */
-        box-sizing: border-box; /* Garantiza que el padding no cause desbordes */
-    }
-
-    button {
-        width: 100%;
-        padding: 12px;
-    }
+nav form button:hover {
+    background-color: #c0392b;
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.8em;
-    }
+/* Lista de enlaces */
+ul {
+    list-style: none;
+    margin-top: 20px;
+}
 
-    .container {
-        padding: 10px;
-        width: 100%;
-    }
+ul li {
+    margin-bottom: 10px;
+}
 
-    form {
-        padding: 10px;
-    }
+ul li a {
+    text-decoration: none;
+    color: #2980b9;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
 
-    form input,
-    form select,
-    form textarea {
-        font-size: 1em;
-        padding: 8px;
-    }
+ul li a:hover {
+    color: #1c5980;
+}
 
-    button {
-        font-size: 1.1em;
-    }
+/* Mensaje inicial */
+p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
 }
