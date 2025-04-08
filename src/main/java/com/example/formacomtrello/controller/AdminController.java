@@ -85,8 +85,9 @@ public class AdminController {
         // Guardamos la tarea en la base de datos
         proyectosService.saveTarea(tarea);  // Necesitas un método en tu servicio que guarde tareas
 
-        // Redirigimos a la página de proyectos después de agregar la tarea
-        return "redirect:/viewprojects";
+        //Redirigir al ID real del proyecto
+        Integer proyectoId = tarea.getProyecto().getId();
+        return "redirect:/viewtasks/" + proyectoId;
     }
 
     @PostMapping("/createcolaborator")
@@ -166,8 +167,9 @@ public class AdminController {
         // Guardar la tarea actualizada
         proyectosService.saveTarea(tareaExistente);
 
-        // Redirigir a la vista de tareas
-        return "redirect:/viewprojects";
+        // ✅ Redirigir al ID real del proyecto
+        Integer proyectoId = tarea.getProyecto().getId();
+        return "redirect:/viewtasks/" + proyectoId;
     }
 
     @GetMapping("/deletetask/{taskId}")
@@ -179,8 +181,9 @@ public class AdminController {
         // Eliminar la tarea
         proyectosService.deleteTarea(tarea);
 
-        // Redirigir al listado de tareas
-        return "redirect:/viewprojects"; // Cambia esto a la vista que desees mostrar después de eliminar
+        // ✅ Redirigir al ID real del proyecto
+        Integer proyectoId = tarea.getProyecto().getId();
+        return "redirect:/viewtasks/" + proyectoId;
     }
 
     @GetMapping("/dashboard")
