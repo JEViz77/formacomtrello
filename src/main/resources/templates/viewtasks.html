@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lista de Tareas</title>
 </head>
 <body>
-<h1>lista de tareas</h1>
+<h1>Lista de tareas del Proyecto</h1>
 
 <table>
     <thead>
@@ -30,13 +30,11 @@
         <td th:text="${task.proyecto.titulo}"></td>
         <td th:text="${task.colaborador.nombre}"></td>
         <td>
-            <!-- Aquí puedes añadir enlaces para editar o eliminar la tarea -->
-            <a th:href="@{/edittask(task.id)}">Editar</a>
-            <a th:href="@{/deletetask(task.id)}">Eliminar</a>
+            <a th:href="@{/edittask/{taskId}(taskId=${task.id})}">Editar</a>
+            <a th:href="@{/deletetask/{taskId}(taskId=${task.id})}">Eliminar</a>
         </td>
     </tr>
     </tbody>
 </table>
-
 </body>
 </html>

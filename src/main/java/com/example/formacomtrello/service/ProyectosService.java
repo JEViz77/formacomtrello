@@ -40,4 +40,8 @@ public class ProyectosService {
     public List<Tareas> obtenerTareas() {
         return tareasRepository.findAll();
     }
+
+    public List<Tareas> obtenerTareasPorProyecto(Integer proyectoId) {
+        return tareasRepository.findByProyectoId(proyectoId);  // Asegúrate de tener este método en tu repositorio
+    }
 }

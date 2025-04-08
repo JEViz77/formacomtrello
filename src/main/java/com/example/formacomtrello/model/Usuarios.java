@@ -87,5 +87,7 @@ public class Usuarios {
     }
 
 
+    public void setGestorId(Integer id) {
 
+    }
 }

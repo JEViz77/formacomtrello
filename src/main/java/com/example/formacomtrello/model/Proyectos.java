@@ -14,8 +14,10 @@ public class Proyectos {
     private String descripcion;
     private LocalDate fecha_inicio;
     private LocalDate fecha_vencimiento;
-    private Integer gestor_id;
 
+    @ManyToOne
+    @JoinColumn(name = "gestor_id")
+    private Usuarios gestor;
     public Proyectos() {
     }
 
@@ -59,11 +61,11 @@ public class Proyectos {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
-    public Integer getGestor_id() {
-        return gestor_id;
+    public Usuarios getGestor() {
+        return gestor;
     }
 
-    public void setGestor_id(Integer gestor_id) {
-        this.gestor_id = gestor_id;
+    public void setGestor(Usuarios gestor) {
+        this.gestor = gestor;
     }
 }

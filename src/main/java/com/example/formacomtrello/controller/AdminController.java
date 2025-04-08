@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
@@ -44,6 +45,13 @@ public class AdminController {
         model.addAttribute("projects", proyectos);
         return "viewprojects"; // este nombre debe coincidir con el HTML: viewprojects.html
     }
+    @GetMapping("/viewtasks/{proyectoId}")
+    public String viewTasks(@PathVariable Integer proyectoId, Model model) {
+        List<Tareas> tareas = proyectosService.obtenerTareasPorProyecto(proyectoId);  // Cambiar método para filtrar por proyecto
+        model.addAttribute("tasks", tareas);
+        return "viewtasks";  // Vista de tareas
+    }
+
     @GetMapping("/addtask")
     public String mostrarFormulario(Model model) {
         // Creamos un nuevo objeto Tareas para enlazarlo con el formulario
@@ -59,14 +67,7 @@ public class AdminController {
         // Retornamos la vista del formulario
         return "addtask";
     }
-    @GetMapping("/viewtasks")
-    public String viewTasks(Model model) {
-        List<Tareas> tareas = proyectosService.obtenerTareas();
-        // Asegúrate de que 'proyecto' no sea nulo en las tareas
-        tareas.forEach(task -> System.out.println(task.getProyecto()));
-        model.addAttribute("tasks", tareas);
-        return "viewtasks";
-    }
+
     @PostMapping("/addtask")
     public String agregarTarea(@ModelAttribute Tareas tarea, @AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Obtenemos el email del usuario autenticado
@@ -102,7 +103,7 @@ public class AdminController {
         colaborador.setRol("ROLE_USER");
 
         // Aquí podrías relacionarlo con el gestor si es necesario
-        // colaborador.setGestorId(gestor.getId()); <-- si tienes ese campo
+        colaborador.setGestorId(gestor.getId());
 
         // Guardar el colaborador en la base de datos
         usuariosRepository.save(colaborador);
@@ -119,9 +120,12 @@ public class AdminController {
         Usuarios user = usuariosRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Asignar el ID del gestor
-        proyecto.setGestor_id(user.getId());
-        proyectosService.saveProyecto(proyecto); // Guardar el proyecto en la base de datos
+        // Aquí puede ser necesario un chequeo adicional para asegurar que los campos del proyecto estén bien configurados
+        if (proyecto.getTitulo() == null || proyecto.getDescripcion() == null) {
+            return "error"; // Puedes redirigir a una página de error si faltan datos importantes
+        }
+
+        proyectosService.saveProyecto(proyecto);  // Guardar el proyecto en la base de datos
 
         return "redirect:/dashboard"; // Redirigir al dashboard después de guardar
     }
