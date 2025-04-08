@@ -20,6 +20,10 @@ public class UsuariosService implements UserDetailsService {
         this.usuariosRepository = usuariosRepository;
     }
 
+    public static List<Usuarios> obtenerColaboradores() {
+            return null;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuarios user = usuariosRepository.findByEmail(email)

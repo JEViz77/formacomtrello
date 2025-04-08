@@ -5,6 +5,7 @@ import com.example.formacomtrello.model.Usuarios;
 import com.example.formacomtrello.model.Tareas;
 import com.example.formacomtrello.repository.UsuariosRepository;
 import com.example.formacomtrello.service.ProyectosService;
+import com.example.formacomtrello.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -94,7 +95,6 @@ public class AdminController {
         model.addAttribute("tasks", tareas);
         return "viewtasks";  // Vista de tareas
     }
-
     @GetMapping("/addtask")
     public String mostrarFormulario(Model model) {
         // Creamos un nuevo objeto Tareas para enlazarlo con el formulario
@@ -110,6 +110,12 @@ public class AdminController {
         // Retornamos la vista del formulario
         return "addtask";
     }
+
+
+
+
+
+
     @PostMapping("/addtask")
     public String agregarTarea(@ModelAttribute Tareas tarea, @AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Obtenemos el email del usuario autenticado
