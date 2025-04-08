@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProyectosService {
@@ -43,5 +44,12 @@ public class ProyectosService {
 
     public List<Tareas> obtenerTareasPorProyecto(Integer proyectoId) {
         return tareasRepository.findByProyectoId(proyectoId);  // Asegúrate de tener este método en tu repositorio
+    }
+    public Optional<Tareas> findTareaById(Integer taskId) {
+        return tareasRepository.findById(taskId);
+    }
+
+    public void deleteTarea(Tareas tarea) {
+        tareasRepository.delete(tarea);
     }
 }

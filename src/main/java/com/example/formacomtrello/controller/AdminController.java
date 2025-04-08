@@ -129,6 +129,59 @@ public class AdminController {
 
         return "redirect:/dashboard"; // Redirigir al dashboard después de guardar
     }
+    @GetMapping("/edittask/{taskId}")
+    public String editTask(@PathVariable Integer taskId, Model model) {
+        // Buscar la tarea por su ID
+        Tareas tarea = proyectosService.findTareaById(taskId)
+                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+        // Obtener la lista de colaboradores y proyectos disponibles
+        List<Usuarios> colaboradores = usuariosRepository.findAll();
+        List<Proyectos> proyectos = proyectosService.findAll();
+
+        // Agregar la tarea, colaboradores y proyectos al modelo
+        model.addAttribute("tarea", tarea);
+        model.addAttribute("colaboradores", colaboradores);
+        model.addAttribute("proyectos", proyectos);
+
+        // Retornar la vista para editar la tarea
+        return "edittask";
+    }
+    @PostMapping("/edittask/{taskId}")
+    public String updateTask(@PathVariable Integer taskId, @ModelAttribute Tareas tarea) {
+        // Buscar la tarea por su ID
+        Tareas tareaExistente = proyectosService.findTareaById(taskId)
+                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+        // Actualizar los campos de la tarea
+        tareaExistente.setTitulo(tarea.getTitulo());
+        tareaExistente.setDescripcion(tarea.getDescripcion());
+        tareaExistente.setFecha_vencimiento(tarea.getFecha_vencimiento());
+        tareaExistente.setEstado(tarea.getEstado());
+
+        // Asignar el colaborador y el proyecto seleccionados
+        tareaExistente.setColaborador(tarea.getColaborador());
+        tareaExistente.setProyecto(tarea.getProyecto());
+
+        // Guardar la tarea actualizada
+        proyectosService.saveTarea(tareaExistente);
+
+        // Redirigir a la vista de tareas
+        return "redirect:/viewprojects";
+    }
+
+    @GetMapping("/deletetask/{taskId}")
+    public String deleteTask(@PathVariable Integer taskId) {
+        // Buscar la tarea por su ID
+        Tareas tarea = proyectosService.findTareaById(taskId)
+                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+        // Eliminar la tarea
+        proyectosService.deleteTarea(tarea);
+
+        // Redirigir al listado de tareas
+        return "redirect:/viewprojects"; // Cambia esto a la vista que desees mostrar después de eliminar
+    }
 
     @GetMapping("/dashboard")
     public String dashboard() {

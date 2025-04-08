@@ -31,7 +31,10 @@
         <td th:text="${task.colaborador.nombre}"></td>
         <td>
             <a th:href="@{/edittask/{taskId}(taskId=${task.id})}">Editar</a>
-            <a th:href="@{/deletetask/{taskId}(taskId=${task.id})}">Eliminar</a>
+            <a th:href="@{/deletetask/{taskId}(taskId=${task.id})}"
+               onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">
+                Eliminar
+            </a>
         </td>
     </tr>
     </tbody>

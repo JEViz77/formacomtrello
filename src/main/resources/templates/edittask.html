@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Tarea</title>
+</head>
+<body>
+<h1>Editar Tarea</h1>
+
+<form th:action="@{/edittask/{id}(id=${tarea.id})}" method="post">
+    <label for="titulo">Título</label>
+    <input type="text" id="titulo" name="titulo" th:value="${tarea.titulo}" required><br>
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" name="descripcion" required th:text="${tarea.descripcion}"></textarea><br>
+
+    <label for="fecha_vencimiento">Fecha de Vencimiento</label>
+    <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" th:value="${tarea.fecha_vencimiento}" required><br>
+
+    <label for="estado">Estado</label>
+    <select  id="estado" name="estado" required>
+        <option value="pendiente" th:selected="${tarea.estado == 'pendiente'}">Pendiente</option>
+        <option value="en_progreso" th:selected="${tarea.estado == 'en_progreso'}">En Progreso</option>
+        <option value="completada" th:selected="${tarea.estado == 'completada'}">Completada</option>
+    </select><br>
+
+
+    <label for="colaborador">Colaborador</label>
+    <select name="colaborador.id" id="colaborador" required>
+        <option th:each="colaborador : ${colaboradores}"
+                th:value="${colaborador.id}"
+                th:text="${colaborador.nombre}"
+                th:selected="${colaborador.id == tarea.colaborador.id}">
+        </option>
+    </select><br>
+
+    <label for="proyecto">Proyecto</label>
+    <select name="proyecto.id" id="proyecto" required>
+        <option th:each="proyecto : ${proyectos}"
+                th:value="${proyecto.id}"
+                th:text="${proyecto.titulo}"
+                th:selected="${proyecto.id == tarea.proyecto.id}">
+        </option>
+    </select><br>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+
+</body>
+</html>

@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/","/home", "/register", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/dashboard/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/edittask/**").hasAuthority("ROLE_ADMIN") // <- Asegúrate de permitir esta ruta
                         .requestMatchers("/colaborator/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
