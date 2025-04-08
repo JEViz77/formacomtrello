@@ -35,9 +35,49 @@ public class AdminController {
         model.addAttribute("proyecto", new Proyectos()); // Asegura que el formulario tiene un objeto vacío
         return "createproject";
     }
+    @PostMapping("/createproject")
+    public String createProject(Proyectos proyecto,  @AuthenticationPrincipal UserDetails userDetails) {
+        // Obtener el email del usuario autenticado
+        String email = userDetails.getUsername();
+
+        // Buscar el usuario en la base de datos
+        Usuarios user = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Aquí puede ser necesario un chequeo adicional para asegurar que los campos del proyecto estén bien configurados
+        if (proyecto.getTitulo() == null || proyecto.getDescripcion() == null) {
+            return "error"; // Puedes redirigir a una página de error si faltan datos importantes
+        }
+
+        proyectosService.saveProyecto(proyecto);  // Guardar el proyecto en la base de datos
+
+        return "redirect:/dashboard"; // Redirigir al dashboard después de guardar
+    }
+
     @GetMapping("/createcolaborator")
     public String createColaborator(Model model) {
         return "createcolaborator";
+    }
+    @PostMapping("/createcolaborator")
+    public String createColaborator(@ModelAttribute Usuarios colaborador,
+                                    @AuthenticationPrincipal UserDetails userDetails) {
+        // Obtener el email del gestor autenticado
+        String email = userDetails.getUsername();
+
+        // Buscar al gestor (aunque no lo uses, lo puedes dejar por si quieres registrar el id del creador)
+        Usuarios gestor = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Asignar el rol de "USER" al nuevo colaborador
+        colaborador.setRol("ROLE_USER");
+
+        // Aquí podrías relacionarlo con el gestor si es necesario
+        colaborador.setGestorId(gestor.getId());
+
+        // Guardar el colaborador en la base de datos
+        usuariosRepository.save(colaborador);
+
+        return "redirect:/dashboard";
     }
     @GetMapping("/viewprojects")
     public String viewProjects(Model model) {
@@ -45,6 +85,7 @@ public class AdminController {
         model.addAttribute("projects", proyectos);
         return "viewprojects"; // este nombre debe coincidir con el HTML: viewprojects.html
     }
+
     @GetMapping("/viewtasks/{proyectoId}")
     public String viewTasks(@PathVariable Integer proyectoId, Model model) {
         List<Tareas> tareas = proyectosService.obtenerTareasPorProyecto(proyectoId);  // Cambiar método para filtrar por proyecto
@@ -67,7 +108,6 @@ public class AdminController {
         // Retornamos la vista del formulario
         return "addtask";
     }
-
     @PostMapping("/addtask")
     public String agregarTarea(@ModelAttribute Tareas tarea, @AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Obtenemos el email del usuario autenticado
@@ -90,46 +130,6 @@ public class AdminController {
         return "redirect:/viewtasks/" + proyectoId;
     }
 
-    @PostMapping("/createcolaborator")
-    public String createColaborator(@ModelAttribute Usuarios colaborador,
-                                    @AuthenticationPrincipal UserDetails userDetails) {
-        // Obtener el email del gestor autenticado
-        String email = userDetails.getUsername();
-
-        // Buscar al gestor (aunque no lo uses, lo puedes dejar por si quieres registrar el id del creador)
-        Usuarios gestor = usuariosRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Asignar el rol de "USER" al nuevo colaborador
-        colaborador.setRol("ROLE_USER");
-
-        // Aquí podrías relacionarlo con el gestor si es necesario
-        colaborador.setGestorId(gestor.getId());
-
-        // Guardar el colaborador en la base de datos
-        usuariosRepository.save(colaborador);
-
-        return "redirect:/dashboard";
-    }
-
-    @PostMapping("/createproject")
-    public String createProject(Proyectos proyecto,  @AuthenticationPrincipal UserDetails userDetails) {
-        // Obtener el email del usuario autenticado
-        String email = userDetails.getUsername();
-
-        // Buscar el usuario en la base de datos
-        Usuarios user = usuariosRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Aquí puede ser necesario un chequeo adicional para asegurar que los campos del proyecto estén bien configurados
-        if (proyecto.getTitulo() == null || proyecto.getDescripcion() == null) {
-            return "error"; // Puedes redirigir a una página de error si faltan datos importantes
-        }
-
-        proyectosService.saveProyecto(proyecto);  // Guardar el proyecto en la base de datos
-
-        return "redirect:/dashboard"; // Redirigir al dashboard después de guardar
-    }
     @GetMapping("/edittask/{taskId}")
     public String editTask(@PathVariable Integer taskId, Model model) {
         // Buscar la tarea por su ID
