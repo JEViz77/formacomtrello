@@ -194,6 +194,11 @@ public class AdminController {
         Integer proyectoId = tarea.getProyecto().getId();
         return "redirect:/viewtasks/" + proyectoId;
     }
+    @PostMapping("/deleteproject/{proyectoId}")
+    public String deleteProject(@PathVariable Integer proyectoId) {
+        proyectosService.deleteProjectById(proyectoId);
+        return "redirect:/viewprojects"; // Redirige a la lista de proyectos después de eliminar
+    }
 
     @GetMapping("/dashboard")
     public String dashboard() {

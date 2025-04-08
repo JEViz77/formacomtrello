@@ -39,7 +39,7 @@
             <label for="estado" class="form-label">Estado</label>
             <select class="form-select" id="estado" name="estado" required>
                 <option value="pendiente" th:selected="${tarea.estado == 'pendiente'}">Pendiente</option>
-                <option value="en_progreso" th:selected="${tarea.estado == 'en_progreso'}">En Progreso</option>
+                <option value="en progreso" th:selected="${tarea.estado == 'en_progreso'}">En Progreso</option>
                 <option value="completada" th:selected="${tarea.estado == 'completada'}">Completada</option>
             </select>
         </div>

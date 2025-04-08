@@ -36,13 +36,19 @@
                 <td th:text="${project.descripcion}"></td>
                 <td th:text="${project.fecha_inicio}"></td>
                 <td th:text="${project.fecha_vencimiento}"></td>
-                <td>
-                    <a class="btn btn-primary btn-sm mb-1" th:href="@{/addtask/{proyectoId}(proyectoId=${project.id})}">
+                <td class="d-flex gap-2 justify-content-center">
+                    <a class="btn btn-primary btn-sm" th:href="@{/addtask/{proyectoId}(proyectoId=${project.id})}">
                         <i class="fas fa-plus"></i> Añadir Tarea
                     </a>
-                    <a class="btn btn-info btn-sm" th:href="@{/viewtasks/{proyectoId}(proyectoId=${project.id})}">
+                    <a class="btn btn-info btn-sm text-white" th:href="@{/viewtasks/{proyectoId}(proyectoId=${project.id})}">
                         <i class="fas fa-tasks"></i> Ver Tareas
                     </a>
+                    <!-- Botón de Eliminar Proyecto -->
+                    <form th:action="@{/deleteproject/{proyectoId}(proyectoId=${project.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </form>
                 </td>
             </tr>
             </tbody>
