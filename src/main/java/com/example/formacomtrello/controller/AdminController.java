@@ -95,17 +95,20 @@ public class AdminController {
         model.addAttribute("tasks", tareas);
         return "viewtasks";  // Vista de tareas
     }
-    @GetMapping("/addtask")
-    public String mostrarFormulario(Model model) {
+    @GetMapping("/addtask/{proyectoId}")
+    public String mostrarFormulario(Model model,@PathVariable Integer proyectoId) {
         // Creamos un nuevo objeto Tareas para enlazarlo con el formulario
-        model.addAttribute("tarea", new Tareas());
+        Tareas tarea = new Tareas();
+        // Asignar el proyecto automáticamente
+        Proyectos proyecto = proyectosService.findById(proyectoId)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+        tarea.setProyecto(proyecto);
+        model.addAttribute("tarea", tarea);
 
         // Obtener los colaboradores desde el repositorio de usuarios
-        List<Usuarios> colaboradores = usuariosRepository.findAll();  // O utiliza un método de tu repositorio que filtre solo los colaboradores
-        List<Proyectos> proyectos = proyectosService.findAll();
+        List<Usuarios> colaboradores = usuariosRepository.findByRol("ROLE_USER");// O utiliza un método de tu repositorio que filtre solo los colaboradores
         // Pasamos las listas de colaboradores y proyectos al modelo
         model.addAttribute("colaboradores", colaboradores);
-        model.addAttribute("proyectos", proyectos);
 
         // Retornamos la vista del formulario
         return "addtask";
@@ -113,18 +116,17 @@ public class AdminController {
 
 
 
-
-
-
-    @PostMapping("/addtask")
-    public String agregarTarea(@ModelAttribute Tareas tarea, @AuthenticationPrincipal UserDetails userDetails, Model model) {
+    @PostMapping("/addtask/{proyectoId}")
+    public String agregarTarea(@ModelAttribute Tareas tarea,@PathVariable Integer proyectoId, @AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Obtenemos el email del usuario autenticado
         String email = userDetails.getUsername();
 
-        // Buscar al gestor en la base de datos (puedes no usarlo, pero es útil si deseas asignar el gestor a la tarea)
-        Usuarios gestor = usuariosRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+        if (tarea.getProyecto() == null || tarea.getProyecto().getId() == null) {
+            Proyectos proyecto = proyectosService.findById(proyectoId)
+                    .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+            tarea.setProyecto(proyecto);
+        }
         // Asignamos el estado "Pendiente" a la tarea (si no lo asignas en el formulario)
         if (tarea.getEstado() == null) {
             tarea.setEstado("Pendiente");
@@ -133,8 +135,7 @@ public class AdminController {
         // Guardamos la tarea en la base de datos
         proyectosService.saveTarea(tarea);  // Necesitas un método en tu servicio que guarde tareas
 
-        //Redirigir al ID real del proyecto
-        Integer proyectoId = tarea.getProyecto().getId();
+
         return "redirect:/viewtasks/" + proyectoId;
     }
 

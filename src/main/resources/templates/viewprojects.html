@@ -37,7 +37,7 @@
                 <td th:text="${project.fecha_inicio}"></td>
                 <td th:text="${project.fecha_vencimiento}"></td>
                 <td>
-                    <a class="btn btn-primary btn-sm mb-1" th:href="@{/addtask(project.id)}">
+                    <a class="btn btn-primary btn-sm mb-1" th:href="@{/addtask/{proyectoId}(proyectoId=${project.id})}">
                         <i class="fas fa-plus"></i> Añadir Tarea
                     </a>
                     <a class="btn btn-info btn-sm" th:href="@{/viewtasks/{proyectoId}(proyectoId=${project.id})}">

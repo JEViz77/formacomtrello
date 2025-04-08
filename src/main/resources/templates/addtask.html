@@ -19,7 +19,7 @@
 
 
 
-    <form th:action="@{/addtask}" method="post">
+    <form th:action="@{'/addtask/' + ${proyectoId}}" method="post">
         <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
             <input type="text" id="titulo" name="titulo" class="form-control" required>
@@ -47,7 +47,7 @@
         <div class="mb-3">
             <label for="colaborador" class="form-label">Colaborador</label>
             <select name="colaborador.id" id="colaborador" class="form-select" required>
-                <option value="">-- Selecciona un colaborador --</option>
+
                 <option th:each="colaborador : ${colaboradores}"
                         th:value="${colaborador.id}"
                         th:text="${colaborador.nombre}"
@@ -56,17 +56,7 @@
             </select>
         </div>
 
-        <div class="mb-4">
-            <label for="proyecto" class="form-label">Proyecto</label>
-            <select name="proyecto.id" id="proyecto" class="form-select" required>
-                <option value="">-- Selecciona un proyecto --</option>
-                <option th:each="proyecto : ${proyectos}"
-                        th:value="${proyecto.id}"
-                        th:text="${proyecto.titulo}"
-                        th:selected="${tarea != null and tarea.proyecto != null and proyecto.id == tarea.proyecto.id}">
-                </option>
-            </select>
-        </div>
+
 
         <button type="submit" class="btn btn-success">
             <i class="fas fa-plus-circle"></i> Crear Tarea

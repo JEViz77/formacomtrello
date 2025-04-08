@@ -7,6 +7,7 @@ import com.example.formacomtrello.repository.TareasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +52,9 @@ public class ProyectosService {
 
     public void deleteTarea(Tareas tarea) {
         tareasRepository.delete(tarea);
+    }
+
+    public Optional<Proyectos> findById(Integer proyectoId) {
+       return proyectosRepository.findById(proyectoId);
     }
 }
