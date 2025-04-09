@@ -7,7 +7,10 @@ import com.example.formacomtrello.repository.UsuariosRepository;
 import com.example.formacomtrello.service.ProyectosService;
 import com.example.formacomtrello.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminController {
@@ -201,7 +205,21 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        Usuarios usuario=null;
+        String nombre = "";
+        if (authentication != null) {
+            username = authentication.getName(); // Obtén el nombre de usuario
+            usuario= usuariosRepository.findByEmail(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        }
+        if(usuario!=null){
+            nombre = usuario.getNombre();
+        }
+        model.addAttribute("username", nombre);
         return "dashboard";
     }
 }

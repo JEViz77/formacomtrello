@@ -13,7 +13,7 @@
 <body>
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Panel del Administrador</h1>
+        <h1 class="h3">Panel del Administrador <span th:text="${username}"></span></h1>
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn btn-logout">
                 <i class="fas fa-sign-out-alt"></i> Cerrar sesión
