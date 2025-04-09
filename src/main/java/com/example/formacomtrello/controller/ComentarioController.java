@@ -62,10 +62,20 @@ public class ComentarioController {
     }
 
     @GetMapping("/tarea/{tareaId}")
-    public String verComentarios(@PathVariable("tareaId") Integer tareaId, Model model) {
+    public String verComentarios(@PathVariable("tareaId") Integer tareaId, Model model,Authentication authentication) {
         List<Comentario> comentarios = comentarioRepository.findByTareaId(tareaId);
         model.addAttribute("comentarios", comentarios);
         model.addAttribute("tareaId", tareaId); // Pasar el ID de la tarea al formulario de comentarios
+
+        // Obtener el rol del usuario autenticado
+        String role = authentication.getAuthorities().toString();
+
+        // Redirigir según el rol
+        if (role.contains("ROLE_USER")) {
+            model.addAttribute("volverUrl", "/colaborator");
+        } else if (role.contains("ROLE_ADMIN")) {
+            model.addAttribute("volverUrl", "/viewprojects");
+        }
         return "comentarios"; // El nombre de la vista HTML
     }
 }
