@@ -58,7 +58,7 @@ public class ComentarioController {
 
         comentarioRepository.save(comentario);
 
-        return "redirect:/tareas/" + tareaId;
+        return "redirect:/comentarios/tarea/" + tareaId;
     }
 
     @GetMapping("/tarea/{tareaId}")
