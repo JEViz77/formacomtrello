@@ -14,3 +14,6 @@ h1 {
 .btn i {
     margin-right: 5px;
 }
+th, td {
+    white-space: nowrap;
+}
