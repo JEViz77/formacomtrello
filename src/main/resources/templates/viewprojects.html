@@ -31,20 +31,21 @@
             </thead>
             <tbody>
             <tr th:each="project : ${projects}">
-                <td th:text="${project.id}"></td>
-                <td th:text="${project.titulo}"></td>
-                <td th:text="${project.descripcion}"></td>
-                <td th:text="${project.fecha_inicio}"></td>
-                <td th:text="${project.fecha_vencimiento}"></td>
+                <td class="text-wrap" th:text="${project.id}"></td>
+                <td class="text-wrap" th:text="${project.titulo}"></td>
+                <td class="text-wrap" th:text="${project.descripcion}"></td>
+                <td class="text-wrap" th:text="${project.fecha_inicio}"></td>
+                <td class="text-wrap" th:text="${project.fecha_vencimiento}"></td>
                 <td>
-                    <div class="d-flex gap-2 justify-content-center overflow-auto">
+                    <div class="d-flex flex-column flex-md-row gap-2 justify-content-center overflow-auto">
                         <a class="btn btn-primary btn-sm text-nowrap" th:href="@{/addtask/{proyectoId}(proyectoId=${project.id})}">
                             <i class="fas fa-plus"></i> Añadir Tarea
                         </a>
                         <a class="btn btn-info btn-sm text-white text-nowrap" th:href="@{/viewtasks/{proyectoId}(proyectoId=${project.id})}">
                             <i class="fas fa-tasks"></i> Ver Tareas
                         </a>
-                        <form th:action="@{/deleteproject/{proyectoId}(proyectoId=${project.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
+                        <form th:action="@{/deleteproject/{proyectoId}(proyectoId=${project.id})}" method="post"
+                              onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
                             <button type="submit" class="btn btn-danger btn-sm text-nowrap">
                                 <i class="fas fa-trash"></i> Eliminar
                             </button>
