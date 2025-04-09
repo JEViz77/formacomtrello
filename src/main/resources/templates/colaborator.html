@@ -61,6 +61,9 @@
                                 <i class="fas fa-spinner"></i> En Proceso
                             </button>
                         </form>
+                        <a th:href="@{/comentarios/tarea/{tareaId}(tareaId=${tarea.id})}" class="btn btn-info btn-sm">
+                            <i class="fas fa-comment-alt"></i> Comentarios
+                        </a>
                     </div>
                 </td>
             </tr>

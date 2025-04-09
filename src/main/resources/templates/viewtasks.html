@@ -49,6 +49,9 @@
                        onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">
                         <i class="fas fa-trash-alt"></i> Eliminar
                     </a>
+                    <a th:href="@{/comentarios/tarea/{tareaId}(tareaId=${task.id})}" class="btn btn-info btn-sm">
+                        <i class="fas fa-comment-alt"></i> Comentarios
+                    </a>
                 </td>
             </tr>
             </tbody>
