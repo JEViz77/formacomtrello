@@ -10,4 +10,7 @@ import java.util.List;
 public interface ComentarioRepository extends JpaRepository<Comentario, Integer> {
 
     List<Comentario> findByTareaId(Integer tareaId);
+
+    List<Comentario> findByTareaIdOrderByFechaCreacionDesc(Integer tareaId);
+
 }

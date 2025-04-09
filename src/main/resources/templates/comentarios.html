@@ -25,15 +25,17 @@
         No hay comentarios aún.
     </div>
 
-    <ul class="list-group mb-4" th:if="${!#lists.isEmpty(comentarios)}">
-        <li class="list-group-item" th:each="comentario : ${comentarios}">
-            <div class="d-flex justify-content-between mb-1">
-                <strong th:text="${comentario.autor.nombre} + ' ' + ${comentario.autor.apellidos}">Autor</strong>
-                <small class="text-muted" th:text="${#dates.format(comentario.fechaCreacion, 'dd/MM/yyyy HH:mm')}">Fecha</small>
-            </div>
-            <p class="mb-0 text-wrap" style="word-break: break-word;" th:text="${comentario.texto}">Texto del comentario</p>
-        </li>
-    </ul>
+    <div class="mb-4" style="max-height: 300px; overflow-y: auto;">
+        <ul class="list-group" th:if="${!#lists.isEmpty(comentarios)}">
+            <li class="list-group-item" th:each="comentario : ${comentarios}">
+                <div class="d-flex justify-content-between mb-1">
+                    <strong th:text="${comentario.autor.nombre} + ' ' + ${comentario.autor.apellidos}">Autor</strong>
+                    <small class="text-muted" th:text="${#dates.format(comentario.fechaCreacion, 'dd/MM/yyyy HH:mm')}">Fecha</small>
+                </div>
+                <p class="mb-0 text-wrap" style="word-break: break-word;" th:text="${comentario.texto}">Texto del comentario</p>
+            </li>
+        </ul>
+    </div>
 
     <!-- Formulario para agregar comentario -->
     <div class="card shadow-sm">

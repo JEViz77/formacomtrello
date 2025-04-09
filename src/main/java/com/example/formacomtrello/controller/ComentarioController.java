@@ -63,7 +63,7 @@ public class ComentarioController {
 
     @GetMapping("/tarea/{tareaId}")
     public String verComentarios(@PathVariable("tareaId") Integer tareaId, Model model,Authentication authentication) {
-        List<Comentario> comentarios = comentarioRepository.findByTareaId(tareaId);
+        List<Comentario> comentarios = comentarioRepository.findByTareaIdOrderByFechaCreacionDesc(tareaId);
         model.addAttribute("comentarios", comentarios);
         model.addAttribute("tareaId", tareaId); // Pasar el ID de la tarea al formulario de comentarios
 
