@@ -237,4 +237,45 @@ public class AdminController {
         model.addAttribute("username", nombreCompleto) ;
         return "dashboard";
     }
+    @GetMapping("/editprofile")
+    public String mostrarFormularioEdicionPerfil(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        Usuarios usuario = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        model.addAttribute("usuario", usuario);
+        return "editprofile";
+    }
+
+    @PostMapping("/editprofile")
+    public String actualizarPerfil(@ModelAttribute Usuarios usuarioForm,
+                                   @AuthenticationPrincipal UserDetails userDetails,
+                                   @org.springframework.web.bind.annotation.RequestParam("confirmPassword") String confirmPassword,
+                                   Model model) {
+
+        String email = userDetails.getUsername();
+        Usuarios usuarioExistente = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Validaciones simples
+        if (usuarioForm.getPassword() != null && !usuarioForm.getPassword().isEmpty()) {
+            if (!usuarioForm.getPassword().equals(confirmPassword)) {
+                model.addAttribute("usuario", usuarioForm);
+                model.addAttribute("error", "Las contraseñas no coinciden.");
+                return "editprofile";
+            }
+            String passwordCodificada = passwordEncoder.encode(usuarioForm.getPassword());
+            usuarioExistente.setPassword(passwordCodificada);
+        }
+
+        usuarioExistente.setNombre(usuarioForm.getNombre());
+        usuarioExistente.setApellidos(usuarioForm.getApellidos());
+        usuarioExistente.setTelefono(usuarioForm.getTelefono());
+        usuarioExistente.setEmail(usuarioForm.getEmail());
+
+        usuariosRepository.save(usuarioExistente);
+
+        return "redirect:/dashboard";
+    }
+
 }
