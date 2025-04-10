@@ -272,7 +272,7 @@ public class AdminController {
         usuarioExistente.setNombre(usuarioForm.getNombre());
         usuarioExistente.setApellidos(usuarioForm.getApellidos());
         usuarioExistente.setTelefono(usuarioForm.getTelefono());
-        usuarioExistente.setEmail(usuarioForm.getEmail());
+
 
         usuariosRepository.save(usuarioExistente);
 

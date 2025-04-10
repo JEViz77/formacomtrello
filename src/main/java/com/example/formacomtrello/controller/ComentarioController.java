@@ -66,15 +66,16 @@ public class ComentarioController {
         List<Comentario> comentarios = comentarioRepository.findByTareaIdOrderByFechaCreacionDesc(tareaId);
         model.addAttribute("comentarios", comentarios);
         model.addAttribute("tareaId", tareaId); // Pasar el ID de la tarea al formulario de comentarios
-
-        // Obtener el rol del usuario autenticado
+        Optional<Tareas> tareaOptional = tareaRepository.findById(tareaId);
+        Integer projectId=tareaOptional.get().getProyecto().getId();
+                // Obtener el rol del usuario autenticado
         String role = authentication.getAuthorities().toString();
 
         // Redirigir según el rol
         if (role.contains("ROLE_USER")) {
             model.addAttribute("volverUrl", "/colaborator");
         } else if (role.contains("ROLE_ADMIN")) {
-            model.addAttribute("volverUrl", "/viewprojects");
+            model.addAttribute("volverUrl", "/viewtasks/"+projectId);
         }
         return "comentarios"; // El nombre de la vista HTML
     }

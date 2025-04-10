@@ -14,7 +14,7 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3">Editar Tarea</h1>
-        <a th:href="@{/viewprojects}" class="btn btn-secondary">
+        <a th:href="@{/viewtasks/{id}(id=${tarea.proyecto.id})}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
