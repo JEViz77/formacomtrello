@@ -17,6 +17,7 @@ public class ProyectosService {
 
     private final ProyectosRepository proyectosRepository;
     private final TareasRepository tareasRepository;
+
     @Autowired
     public ProyectosService(ProyectosRepository proyectosRepository, TareasRepository tareasRepository) {
         this.proyectosRepository = proyectosRepository;
@@ -39,6 +40,7 @@ public class ProyectosService {
     public Object obtenerTodos() {
         return null;
     }
+
     public List<Tareas> obtenerTareas() {
         return tareasRepository.findAll();
     }
@@ -46,6 +48,7 @@ public class ProyectosService {
     public List<Tareas> obtenerTareasPorProyecto(Integer proyectoId) {
         return tareasRepository.findByProyectoId(proyectoId);  // Asegúrate de tener este método en tu repositorio
     }
+
     public Optional<Tareas> findTareaById(Integer taskId) {
         return tareasRepository.findById(taskId);
     }
@@ -57,6 +60,7 @@ public class ProyectosService {
     public Optional<Proyectos> findById(Integer proyectoId) {
         return proyectosRepository.findById(proyectoId);
     }
+
     public void deleteProjectById(Integer id) {
         proyectosRepository.deleteById(id); // Esto elimina el proyecto de la base de datos
     }

@@ -21,7 +21,7 @@ public class UsuariosService implements UserDetailsService {
     }
 
     public static List<Usuarios> obtenerColaboradores() {
-            return null;
+        return null;
     }
 
     @Override

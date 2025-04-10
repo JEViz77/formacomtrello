@@ -17,7 +17,8 @@
 
         <!-- Menú desplegable para Cerrar sesión y Editar perfil -->
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: green">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false" style="background-color: green">
                 <i class="fas fa-user"></i> Menú
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -64,14 +65,14 @@
                     <!-- Contenedor con display flex para alinear los botones horizontalmente -->
                     <div class="d-flex justify-content-center gap-2">
                         <form th:action="@{/colaborator/tarea/procesar}" method="post" class="d-inline">
-                            <input type="hidden" th:name="tareaId" th:value="${tarea.id}" />
+                            <input type="hidden" th:name="tareaId" th:value="${tarea.id}"/>
                             <button type="submit" class="btn btn-warning btn-sm"
                                     th:disabled="${tarea.estado == 'Completada' || tarea.estado == 'En Proceso'}">
                                 <i class="fas fa-spinner"></i> En Proceso
                             </button>
                         </form>
                         <form th:action="@{/colaborator/tarea/finalizar}" method="post" class="d-inline">
-                            <input type="hidden" th:name="tareaId" th:value="${tarea.id}" />
+                            <input type="hidden" th:name="tareaId" th:value="${tarea.id}"/>
                             <button type="submit" class="btn btn-success btn-sm"
                                     th:disabled="${tarea.estado == 'Completada'}">
                                 <i class="fas fa-check"></i> Finalizar

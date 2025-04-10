@@ -1,6 +1,7 @@
 package com.example.formacomtrello.model;
 
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -26,7 +27,8 @@ public class Comentario {
     private Tareas tarea;
 
     // Constructor vacío obligatorio
-    public Comentario() {}
+    public Comentario() {
+    }
 
     // Getters y Setters
 

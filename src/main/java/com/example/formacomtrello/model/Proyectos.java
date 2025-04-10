@@ -18,6 +18,7 @@ public class Proyectos {
     @ManyToOne
     @JoinColumn(name = "gestor_id")
     private Usuarios gestor;
+
     public Proyectos() {
     }
 

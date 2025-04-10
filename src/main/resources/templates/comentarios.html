@@ -32,7 +32,8 @@
                     <strong th:text="${comentario.autor.nombre} + ' ' + ${comentario.autor.apellidos}">Autor</strong>
                     <small class="text-muted" th:text="${#dates.format(comentario.fechaCreacion, 'dd/MM/yyyy HH:mm')}">Fecha</small>
                 </div>
-                <p class="mb-0 text-wrap" style="word-break: break-word;" th:text="${comentario.texto}">Texto del comentario</p>
+                <p class="mb-0 text-wrap" style="word-break: break-word;" th:text="${comentario.texto}">Texto del
+                    comentario</p>
             </li>
         </ul>
     </div>
@@ -42,7 +43,7 @@
         <div class="card-body">
             <h4 class="card-title mb-3">Agregar un nuevo comentario</h4>
             <form th:action="@{/comentarios/agregar}" method="post">
-                <input type="hidden" name="tareaId" th:value="${tareaId}" />
+                <input type="hidden" name="tareaId" th:value="${tareaId}"/>
                 <div class="mb-3">
                     <label for="texto" class="form-label">Comentario</label>
                     <textarea class="form-control" id="texto" name="texto" rows="3" required></textarea>

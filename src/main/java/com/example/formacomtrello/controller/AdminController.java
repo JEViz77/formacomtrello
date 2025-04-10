@@ -133,8 +133,6 @@ public class AdminController {
         return "addtask";
     }
 
-
-
     @PostMapping("/addtask/{proyectoId}")
     public String agregarTarea(@ModelAttribute Tareas tarea,@PathVariable Integer proyectoId, @AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Obtenemos el email del usuario autenticado
