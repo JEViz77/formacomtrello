@@ -4,8 +4,7 @@ body {
 }
 
 .container {
-    max-width: 700px;
-    padding: 20px;
+    max-width: 600px;
 }
 
 h1 {
@@ -52,7 +51,7 @@ input.form-control:focus {
 button[type="submit"] {
     font-size: 1.1rem;
     padding: 0.75rem 2rem;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border-radius: 30px;
     border: none;
@@ -60,7 +59,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 button[type="submit"]:focus {
