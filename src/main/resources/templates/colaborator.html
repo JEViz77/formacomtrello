@@ -14,14 +14,27 @@
 <div class="container mt-5">
     <nav class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3">Tareas <span th:text="${nombreColaborador}"></span></h1>
-        <form th:action="@{/logout}" method="post" class="mb-0">
-            <button type="submit" class="btn btn-danger">
-                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+
+        <!-- Menú desplegable para Cerrar sesión y Editar perfil -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: green">
+                <i class="fas fa-user"></i> Menú
             </button>
-        </form>
-        <a th:href="@{/colaborator/editprofile}" class="btn btn-warning mt-3">
-            <i class="fas fa-user-cog"></i> Editar Perfil
-        </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                <li>
+                    <a class="dropdown-item" th:href="@{/colaborator/editprofile}">
+                        <i class="fas fa-user-cog"></i> Editar Perfil
+                    </a>
+                </li>
+                <li>
+                    <form th:action="@{/logout}" method="post" class="m-0">
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="table-responsive" style="overflow: visible;">
@@ -47,38 +60,26 @@
                     </span>
                 </td>
                 <td th:text="${tarea.proyecto.titulo}"></td>
-                <td style="position: relative;">
-                    <div class="dropdown">
-
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" style="background-color: green" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Menú
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form th:action="@{/colaborator/tarea/procesar}" method="post" class="dropdown-item m-0 p-0">
-                                    <input type="hidden" th:name="tareaId" th:value="${tarea.id}" />
-                                    <button type="submit" class="dropdown-item text-dark"
-                                            th:disabled="${tarea.estado == 'Completada' || tarea.estado == 'En Proceso'}">
-                                        <i class="fas fa-spinner text-warning"></i> En Proceso
-                                    </button>
-                                </form>
-                            </li>
-                            <li>
-                                <form th:action="@{/colaborator/tarea/finalizar}" method="post" class="dropdown-item m-0 p-0">
-                                    <input type="hidden" th:name="tareaId" th:value="${tarea.id}" />
-                                    <button type="submit" class="dropdown-item text-dark"
-                                            th:disabled="${tarea.estado == 'Completada'}">
-                                        <i class="fas fa-check text-success"></i> Finalizar
-                                    </button>
-                                </form>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item text-dark" th:href="@{/comentarios/tarea/{tareaId}(tareaId=${tarea.id})}">
-                                    <i class="fas fa-comment-alt text-info"></i> Comentarios
-                                </a>
-                            </li>
-                        </ul>
+                <td class="text-center">
+                    <!-- Contenedor con display flex para alinear los botones horizontalmente -->
+                    <div class="d-flex justify-content-center gap-2">
+                        <form th:action="@{/colaborator/tarea/procesar}" method="post" class="d-inline">
+                            <input type="hidden" th:name="tareaId" th:value="${tarea.id}" />
+                            <button type="submit" class="btn btn-warning btn-sm"
+                                    th:disabled="${tarea.estado == 'Completada' || tarea.estado == 'En Proceso'}">
+                                <i class="fas fa-spinner"></i> En Proceso
+                            </button>
+                        </form>
+                        <form th:action="@{/colaborator/tarea/finalizar}" method="post" class="d-inline">
+                            <input type="hidden" th:name="tareaId" th:value="${tarea.id}" />
+                            <button type="submit" class="btn btn-success btn-sm"
+                                    th:disabled="${tarea.estado == 'Completada'}">
+                                <i class="fas fa-check"></i> Finalizar
+                            </button>
+                        </form>
+                        <a class="btn btn-info btn-sm" th:href="@{/comentarios/tarea/{tareaId}(tareaId=${tarea.id})}">
+                            <i class="fas fa-comment-alt"></i> Comentarios
+                        </a>
                     </div>
                 </td>
             </tr>
@@ -86,6 +87,8 @@
         </table>
     </div>
 </div>
-</body>
+
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
