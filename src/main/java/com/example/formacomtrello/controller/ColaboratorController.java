@@ -105,7 +105,7 @@ public class ColaboratorController {
         colaboradorExistente.setNombre(colaboradorForm.getNombre());
         colaboradorExistente.setApellidos(colaboradorForm.getApellidos());
         colaboradorExistente.setTelefono(colaboradorForm.getTelefono());
-        colaboradorExistente.setEmail(colaboradorForm.getEmail());
+
 
         usuariosRepository.save(colaboradorExistente);
 
