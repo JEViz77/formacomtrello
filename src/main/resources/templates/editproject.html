@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Proyecto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Editar Proyecto</h1>
+    <form th:action="@{/editproject/{id}(id=${proyecto.id})}" method="post">
+        <!-- Campo Título -->
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" th:value="${proyecto.titulo}" name="titulo" required>
+        </div>
+
+        <!-- Campo Descripción -->
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" th:text="${proyecto.descripcion}" name="descripcion" rows="4" required></textarea>
+        </div>
+
+        <!-- Campo Fecha de Inicio -->
+        <div class="mb-3">
+            <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fecha_inicio" th:value="${proyecto.fecha_inicio}" name="fecha_inicio" required>
+        </div>
+
+        <!-- Campo Fecha de Vencimiento -->
+        <div class="mb-3">
+            <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento</label>
+            <input type="date" class="form-control" id="fecha_vencimiento" th:value="${proyecto.fecha_vencimiento}" name="fecha_vencimiento" required>
+        </div>
+
+        <!-- Botón de Guardar -->
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

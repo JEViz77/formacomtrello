@@ -277,5 +277,34 @@ public class AdminController {
 
         return "redirect:/dashboard";
     }
+    @GetMapping("/editproject/{id}")
+    public String showEditProjectForm(@PathVariable Integer id, Model model) {
+        // Buscar el proyecto por su ID
+        Proyectos proyecto = proyectosService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        // Pasar el proyecto al modelo para que se pueda mostrar en el formulario
+        model.addAttribute("proyecto", proyecto);
+        return "editproject"; // Vista que contiene el formulario de edición
+    }
+    @PostMapping("/editproject/{id}")
+    public String updateProject(@PathVariable Integer id, @ModelAttribute Proyectos proyecto) {
+        // Buscar el proyecto por su ID
+        Proyectos proyectoExistente = proyectosService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        // Actualizar los campos del proyecto
+        proyectoExistente.setTitulo(proyecto.getTitulo());
+        proyectoExistente.setDescripcion(proyecto.getDescripcion());
+        proyectoExistente.setFecha_inicio(proyecto.getFecha_inicio());
+        proyectoExistente.setFecha_vencimiento(proyecto.getFecha_vencimiento());
+
+        // Guardar el proyecto actualizado
+        proyectosService.saveProyecto(proyectoExistente);
+
+        // Redirigir al dashboard o donde lo desees
+        return "redirect:/viewprojects";
+    }
+
 
 }
