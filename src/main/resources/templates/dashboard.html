@@ -12,31 +12,37 @@
 </head>
 <body>
 <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Panel del Administrador <span th:text="${username}"></span></h1>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-logout">
-                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-            </button>
-        </form>
+    <!-- Centrar el título en pantallas grandes -->
+    <div class="d-flex justify-content-center align-items-center mb-5">
+        <h1 class="h3 text-center">Panel de Administrador de <span th:text="${username}"></span></h1>
     </div>
 
-    <div class="row g-3">
-        <div class="col-md-4">
-            <a th:href="@{/createproject}" class="btn btn-primary w-100">
+    <div class="row g-4 mb-4">
+        <!-- Botones distribuidos uno debajo del otro en pantallas grandes -->
+        <div class="col-12 col-md-12">
+            <a th:href="@{/createproject}" class="btn btn-primary w-100 py-3">
                 <i class="fas fa-folder-plus"></i> Crear Proyecto
             </a>
         </div>
-        <div class="col-md-4">
-            <a th:href="@{/createcolaborator}" class="btn btn-success w-100">
+        <div class="col-12 col-md-12">
+            <a th:href="@{/createcolaborator}" class="btn btn-success w-100 py-3">
                 <i class="fas fa-user-plus"></i> Crear Colaborador
             </a>
         </div>
-        <div class="col-md-4">
-            <a th:href="@{/viewprojects}" class="btn btn-info w-100">
+        <div class="col-12 col-md-12">
+            <a th:href="@{/viewprojects}" class="btn btn-info w-100 py-3">
                 <i class="fas fa-folder-open"></i> Ver Proyectos
             </a>
         </div>
+    </div>
+
+    <!-- Botón de cerrar sesión fuera del nav, en la parte inferior -->
+    <div class="logout-container mt-4">
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="btn btn-logout w-100 py-3">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </button>
+        </form>
     </div>
 </div>
 </body>

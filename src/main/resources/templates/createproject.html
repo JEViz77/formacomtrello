@@ -30,14 +30,16 @@
             <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
         </div>
 
-        <div class="mb-3">
-            <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-            <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento</label>
-            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" required>
+        <!-- Fechas en fila -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+            </div>
+            <div class="col-md-6">
+                <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento</label>
+                <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" required>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-success">

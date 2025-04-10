@@ -32,9 +32,17 @@ public class ColaboratorController {
         String email = authentication.getName(); // Email del usuario autenticado
         Optional<Usuarios> colaborador = usuariosRepository.findByEmail(email);
 
-        List<Tareas> tareas = tareasRepository.findByColaborador(colaborador);
+        if (colaborador.isPresent()) {
+            Usuarios usuario = colaborador.get();
+            String nombreCompleto = usuario.getNombre() + " " + usuario.getApellidos();
+            model.addAttribute("nombreColaborador", nombreCompleto);
 
-        model.addAttribute("tareas", tareas);
+            List<Tareas> tareas = tareasRepository.findByColaborador(colaborador);
+            model.addAttribute("tareas", tareas);
+        } else {
+            throw new RuntimeException("Colaborador no encontrado");
+        }
+
         return "colaborator";
     }
     @PostMapping("/colaborator/tarea/finalizar")

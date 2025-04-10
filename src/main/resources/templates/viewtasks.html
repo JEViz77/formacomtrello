@@ -19,11 +19,11 @@
 <body>
 <div class="container mt-5">
     <nav class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Lista de tareas del proyecto</h1>
+        <h1 class="h3">Lista de tareas</h1>
         <a href="/viewprojects" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Volver</a>
     </nav>
 
-    <div class="table-responsive">
+    <div class="table-responsive" style="overflow: visible;">
         <table class="table table-striped table-bordered align-middle text-center mb-0">
             <thead class="table-dark">
             <tr>
@@ -46,19 +46,30 @@
                 <td th:text="${task.estado}"></td>
                 <td th:text="${task.proyecto.titulo}"></td>
                 <td th:text="${task.colaborador.nombre}"></td>
-                <td>
-                    <div class="d-flex gap-2 justify-content-center overflow-auto">
-                        <a th:href="@{/edittask/{taskId}(taskId=${task.id})}" class="btn btn-primary btn-sm text-nowrap">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a th:href="@{/deletetask/{taskId}(taskId=${task.id})}"
-                           class="btn btn-danger btn-sm text-nowrap"
-                           onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">
-                            <i class="fas fa-trash-alt"></i> Eliminar
-                        </a>
-                        <a th:href="@{/comentarios/tarea/{tareaId}(tareaId=${task.id})}" class="btn btn-info btn-sm text-nowrap">
-                            <i class="fas fa-comment-alt"></i> Comentarios
-                        </a>
+                <td style="position: relative;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" style="background-color: green" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Menú
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" th:href="@{/edittask/{taskId}(taskId=${task.id})}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger"
+                                   th:href="@{/deletetask/{taskId}(taskId=${task.id})}"
+                                   onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/comentarios/tarea/{tareaId}(tareaId=${task.id})}">
+                                    <i class="fas fa-comment-alt"></i> Comentarios
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </td>
             </tr>
@@ -67,4 +78,5 @@
     </div>
 </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </html>

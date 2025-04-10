@@ -88,6 +88,20 @@ public class AdminController {
     }
     @GetMapping("/viewprojects")
     public String viewProjects(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        Usuarios usuario=null;
+        String nombreCompleto = "";
+        if (authentication != null) {
+            username = authentication.getName(); // Obtén el nombre de usuario
+            usuario= usuariosRepository.findByEmail(username)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        }
+        if(usuario!=null){
+            nombreCompleto = usuario.getNombre() + " " + usuario.getApellidos();;
+        }
+        model.addAttribute("username", nombreCompleto) ;
         List<Proyectos> proyectos = proyectosService.findAll(); // o tu método que los obtiene
         model.addAttribute("projects", proyectos);
         return "viewprojects"; // este nombre debe coincidir con el HTML: viewprojects.html
@@ -97,7 +111,7 @@ public class AdminController {
     public String viewTasks(@PathVariable Integer proyectoId, Model model) {
         List<Tareas> tareas = proyectosService.obtenerTareasPorProyecto(proyectoId);  // Cambiar método para filtrar por proyecto
         model.addAttribute("tasks", tareas);
-        return "viewtasks";  // Vista de tareas
+        return "viewtasks" ;  // Vista de tareas
     }
     @GetMapping("/addtask/{proyectoId}")
     public String mostrarFormulario(Model model,@PathVariable Integer proyectoId) {
@@ -182,6 +196,7 @@ public class AdminController {
 
         // ✅ Redirigir al ID real del proyecto
         Integer proyectoId = tarea.getProyecto().getId();
+
         return "redirect:/viewtasks/" + proyectoId;
     }
 
@@ -209,7 +224,7 @@ public class AdminController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
         Usuarios usuario=null;
-        String nombre = "";
+        String nombreCompleto = "";
         if (authentication != null) {
             username = authentication.getName(); // Obtén el nombre de usuario
             usuario= usuariosRepository.findByEmail(username)
@@ -217,9 +232,9 @@ public class AdminController {
 
         }
         if(usuario!=null){
-            nombre = usuario.getNombre();
+            nombreCompleto = usuario.getNombre() + " " + usuario.getApellidos();;
         }
-        model.addAttribute("username", nombre);
+        model.addAttribute("username", nombreCompleto) ;
         return "dashboard";
     }
 }
