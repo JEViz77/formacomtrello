@@ -14,11 +14,11 @@ h1 {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #28a745; /* Verde suave */
     color: white;
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
     border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
 }
 
 .btn-secondary:hover {

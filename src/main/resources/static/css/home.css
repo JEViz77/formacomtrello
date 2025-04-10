@@ -5,14 +5,16 @@ body {
     color: #de6916;
     margin: 0;
     padding: 0;
+    background-color: #4b4b6d;
 
 }
 
 .container {
+    margin-top: 20px;
     max-width: 960px;
-    margin: auto;
+
     padding: 20px;
-    background-color: gainsboro;
+    background-color: #1e1e2f;
 
 }
 
