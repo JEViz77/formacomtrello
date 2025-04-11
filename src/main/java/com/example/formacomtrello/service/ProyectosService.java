@@ -2,8 +2,10 @@ package com.example.formacomtrello.service;
 
 import com.example.formacomtrello.model.Proyectos;
 import com.example.formacomtrello.model.Tareas;
+import com.example.formacomtrello.model.Usuarios;
 import com.example.formacomtrello.repository.ProyectosRepository;
 import com.example.formacomtrello.repository.TareasRepository;
+import com.example.formacomtrello.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,13 @@ public class ProyectosService {
 
     private final ProyectosRepository proyectosRepository;
     private final TareasRepository tareasRepository;
+    private final UsuariosRepository usuariosRepository;
 
     @Autowired
-    public ProyectosService(ProyectosRepository proyectosRepository, TareasRepository tareasRepository) {
+    public ProyectosService(ProyectosRepository proyectosRepository, TareasRepository tareasRepository, UsuariosRepository usuariosRepository) {
         this.proyectosRepository = proyectosRepository;
         this.tareasRepository = tareasRepository;
+        this.usuariosRepository = usuariosRepository;
     }
 
     public void saveProyecto(Proyectos proyecto) {
@@ -66,6 +70,13 @@ public class ProyectosService {
     }
     public List<Proyectos> findByGestorId(Integer gestorId) {
         return proyectosRepository.findByGestorId(gestorId);
+    }
+    public Optional<Proyectos> findProyectoById(Integer id) {
+        return proyectosRepository.findById(id);
+    }
+
+    public Optional<Usuarios> findUsuarioById(Integer id) {
+        return usuariosRepository.findById(id);
     }
 
 }

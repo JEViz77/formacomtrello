@@ -161,12 +161,12 @@ public class AdminController {
 
         // Obtener solo los colaboradores (usuarios con rol ROLE_USER)
         List<Usuarios> colaboradores = usuariosRepository.findByRol("ROLE_USER");
-        List<Proyectos> proyectos = proyectosService.findAll();
+
 
         // Agregar la tarea, colaboradores y proyectos al modelo
         model.addAttribute("tarea", tarea);
         model.addAttribute("colaboradores", colaboradores);
-        model.addAttribute("proyectos", proyectos);
+
 
         // Retornar la vista para editar la tarea
         return "edittask";
@@ -180,24 +180,27 @@ public class AdminController {
         Tareas tareaExistente = proyectosService.findTareaById(taskId)
                 .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
 
-        // Actualizar los campos de la tarea
+        // Buscar el proyecto y el colaborador a partir del ID (porque vienen incompletos en el form)
+        Proyectos proyecto = proyectosService.findProyectoById(tarea.getProyecto().getId())
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        Usuarios colaborador = proyectosService.findUsuarioById(tarea.getColaborador().getId())
+                .orElseThrow(() -> new RuntimeException("Colaborador no encontrado"));
+
+        // Actualizar campos
         tareaExistente.setTitulo(tarea.getTitulo());
         tareaExistente.setDescripcion(tarea.getDescripcion());
         tareaExistente.setFecha_vencimiento(tarea.getFecha_vencimiento());
         tareaExistente.setEstado(tarea.getEstado());
-
-        // Asignar el colaborador y el proyecto seleccionados
-        tareaExistente.setColaborador(tarea.getColaborador());
-        tareaExistente.setProyecto(tarea.getProyecto());
+        tareaExistente.setProyecto(proyecto);
+        tareaExistente.setColaborador(colaborador);
 
         // Guardar la tarea actualizada
         proyectosService.saveTarea(tareaExistente);
 
-        // ✅ Redirigir al ID real del proyecto
-        Integer proyectoId = tarea.getProyecto().getId();
-
-        return "redirect:/viewtasks/" + proyectoId;
+        return "redirect:/viewtasks/" + proyecto.getId();
     }
+
 
     @GetMapping("/deletetask/{taskId}")
     public String deleteTask(@PathVariable Integer taskId) {

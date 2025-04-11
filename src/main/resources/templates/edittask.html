@@ -57,16 +57,7 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="proyecto" class="form-label">Proyecto</label>
-            <select class="form-select" name="proyecto.id" id="proyecto" required>
-                <option th:each="proyecto : ${proyectos}"
-                        th:value="${proyecto.id}"
-                        th:text="${proyecto.titulo}"
-                        th:selected="${proyecto.id == tarea.proyecto.id}">
-                </option>
-            </select>
-        </div>
+        <input type="hidden" name="proyecto.id" th:value="${tarea.proyecto.id}">
 
         <button type="submit" class="btn btn-success">
             <i class="fas fa-save"></i> Guardar Cambios
