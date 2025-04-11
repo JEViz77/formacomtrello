@@ -64,5 +64,8 @@ public class ProyectosService {
     public void deleteProjectById(Integer id) {
         proyectosRepository.deleteById(id); // Esto elimina el proyecto de la base de datos
     }
+    public List<Proyectos> findByGestorId(Integer gestorId) {
+        return proyectosRepository.findByGestorId(gestorId);
+    }
 
 }

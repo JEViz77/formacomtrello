@@ -49,22 +49,21 @@ public class AdminController {
     }
     @PostMapping("/createproject")
     public String createProject(Proyectos proyecto,  @AuthenticationPrincipal UserDetails userDetails) {
-        // Obtener el email del usuario autenticado
         String email = userDetails.getUsername();
-
-        // Buscar el usuario en la base de datos
         Usuarios user = usuariosRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Aquí puede ser necesario un chequeo adicional para asegurar que los campos del proyecto estén bien configurados
         if (proyecto.getTitulo() == null || proyecto.getDescripcion() == null) {
-            return "error"; // Puedes redirigir a una página de error si faltan datos importantes
+            return "error";
         }
 
-        proyectosService.saveProyecto(proyecto);  // Guardar el proyecto en la base de datos
+        // Asignar el gestor ID
+        proyecto.setGestor(user);
 
-        return "redirect:/dashboard"; // Redirigir al dashboard después de guardar
+        proyectosService.saveProyecto(proyecto);
+        return "redirect:/dashboard";
     }
+
 
     @GetMapping("/createcolaborator")
     public String createColaborator(Model model) {
@@ -90,23 +89,21 @@ public class AdminController {
     @GetMapping("/viewprojects")
     public String viewProjects(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = "";
-        Usuarios usuario=null;
-        String nombreCompleto = "";
-        if (authentication != null) {
-            username = authentication.getName(); // Obtén el nombre de usuario
-            usuario= usuariosRepository.findByEmail(username)
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        String email = authentication.getName();
 
-        }
-        if(usuario!=null){
-            nombreCompleto = usuario.getNombre() + " " + usuario.getApellidos();;
-        }
-        model.addAttribute("username", nombreCompleto) ;
-        List<Proyectos> proyectos = proyectosService.findAll(); // o tu método que los obtiene
+        Usuarios usuario = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        String nombreCompleto = usuario.getNombre() + " " + usuario.getApellidos();
+        model.addAttribute("username", nombreCompleto);
+
+        // 🔥 Solo proyectos del administrador autenticado
+        List<Proyectos> proyectos = proyectosService.findByGestorId(usuario.getId());
         model.addAttribute("projects", proyectos);
-        return "viewprojects"; // este nombre debe coincidir con el HTML: viewprojects.html
+
+        return "viewprojects";
     }
+
 
     @GetMapping("/viewtasks/{proyectoId}")
     public String viewTasks(@PathVariable Integer proyectoId, Model model) {
@@ -162,8 +159,8 @@ public class AdminController {
         Tareas tarea = proyectosService.findTareaById(taskId)
                 .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
 
-        // Obtener la lista de colaboradores y proyectos disponibles
-        List<Usuarios> colaboradores = usuariosRepository.findAll();
+        // Obtener solo los colaboradores (usuarios con rol ROLE_USER)
+        List<Usuarios> colaboradores = usuariosRepository.findByRol("ROLE_USER");
         List<Proyectos> proyectos = proyectosService.findAll();
 
         // Agregar la tarea, colaboradores y proyectos al modelo
@@ -174,6 +171,9 @@ public class AdminController {
         // Retornar la vista para editar la tarea
         return "edittask";
     }
+
+
+
     @PostMapping("/edittask/{taskId}")
     public String updateTask(@PathVariable Integer taskId, @ModelAttribute Tareas tarea) {
         // Buscar la tarea por su ID
