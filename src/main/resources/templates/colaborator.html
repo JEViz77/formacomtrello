@@ -44,10 +44,10 @@
             <tr>
                 <th>Tarea</th>
                 <th>Descripción</th>
-                <th>Fecha de Vencimiento</th>
-                <th>Estado</th>
                 <th>Proyecto</th>
                 <th>Gestor</th>
+                <th>Estado</th>
+                <th>Fecha de Vencimiento</th>
                 <th>Acciones</th>
             </tr>
             </thead>
@@ -55,14 +55,16 @@
             <tr th:each="tarea : ${tareas}">
                 <td th:text="${tarea.titulo}"></td>
                 <td th:text="${tarea.descripcion}"></td>
-                <td th:text="${tarea.fecha_vencimiento}"></td>
+                <td th:text="${tarea.proyecto.titulo}"></td>
+                <td th:text="${tarea.proyecto.gestor.nombre + ' ' + tarea.proyecto.gestor.apellidos}"></td>
+
                 <td>
                     <span th:text="${tarea.estado}"
                           th:classappend="${tarea.estado == 'Completada'} ? 'text-success fw-bold' : ''">
                     </span>
                 </td>
-                <td th:text="${tarea.proyecto.titulo}"></td>
-                <td th:text="${tarea.proyecto.gestor.nombre + ' ' + tarea.proyecto.gestor.apellidos}"></td>
+                <td th:text="${tarea.fecha_vencimiento}"></td>
+
                 <td class="text-center">
                     <!-- Contenedor con display flex para alinear los botones horizontalmente -->
                     <div class="d-flex justify-content-center gap-2">
